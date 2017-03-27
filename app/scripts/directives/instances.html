@@ -1,0 +1,55 @@
+<div class="container--instance">
+  <div class="loader" ng-show="!instances.length && !hasError && !canLaunchInstance">
+    <div class="loader--dot"></div>
+    <div class="loader--dot"></div>
+    <div class="loader--dot"></div>
+    <div class="loader--dot"></div>
+    <div class="loader--dot"></div>
+    <div class="loader--dot"></div>
+    <div class="loader--text" ng-class="{'loader--text--loading': updated_instances_ids, 'loader--text--connecting': !updated_instances_ids}"></div>
+  </div>
+  <div class="row">
+    <div ng-show="instances" ng-repeat="instance in instances" class="row--instance">
+      <div class="thumbnail">
+        <img src="images/wordpress.jpg" alt="wordpress">
+        <div class="caption" ng-if="instance.State.Code != 48">
+          <h3 class="caption--header">
+            <span class="badge" ng-class="{
+              'badge-danger': instance.State.Code == 80,
+              'badge-success': instance.State.Code == 16,
+              'badge-warning': instance.State.Code == 0 || instance.State.Code == 64,
+              'badge-default': instance.State.Code != 16 && instance.State.Code != 80 && instance.State.Code != 0 && instance.State.Code != 64
+            }">{{ instance.State.Name }}</span>
+          </h3>
+          <div class="caption--buttons">
+            <a class="btn btn-default button-link" ng-href="http://{{ instance.PublicDnsName }}" target="_blank" ng-show="instance.State.Code == '16'"><img class="button-img" ng-src="images/link-button.png" alt="Link"></a>
+            <button class="btn btn-success" ng-click="start(instance)" ng-disabled="instance.State.Code == 0 || instance.State.Code == 16 || instance.State.Code == 32 || instance.State.Code == 48"><img ng-src="images/play-button.png" class="button-img" alt="Start" title="Start"></button>
+            <button class="btn btn-warning" ng-click="stop(instance)" ng-disabled="instance.State.Code == 64 || instance.State.Code == 80 || instance.State.Code == 32 || instance.State.Code == 48" ><img ng-src="images/stop-button.png" class="button-img" alt="Stop" title="Stop"></button>
+            <button class="btn btn-danger" ng-click="terminate(instance)" ng-disabled="instance.State.Code == 32 || instance.State.Code == 48"><img ng-src="images/terminate-button.png" class="button-img" alt="Terminate" title="Terminate"></button>
+          </div>
+        </div>
+        <div class="caption" ng-if="instance.State.Code == 48">
+          <h3 class="caption--header">
+            <span class="badge badge-default">{{ instance.State.Name }}</span>
+          </h3>
+          <div class="caption--buttons">
+            <button class="btn btn-default" ng-click="launched = launchInstance()" ng-disabled="launched || !canLaunchInstance">New Instance <img ng-src="images/wordpress-button.png" class="button-img" alt="New Instance" title="New Instance"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-show="instances" ng-if="instances.length == 0 && canLaunchInstance" class="row--instance">
+      <div class="thumbnail">
+        <img src="images/wordpress.jpg" alt="wordpress">
+        <div class="caption">
+          <div class="caption--buttons">
+            <button class="btn btn-default" ng-click="launched = launchInstance()" ng-disabled="launched || !canLaunchInstance">New Instance <img ng-src="images/wordpress-button.png" class="button-img" alt="New Instance" title="New Instance"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="error" ng-show="hasError">
+    {{errorMessage}}
+  </div>
+</div>

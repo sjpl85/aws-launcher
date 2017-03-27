@@ -1,0 +1,21 @@
+{
+  "name": "aws-launcher",
+  "description": "aws launcher",
+  "main": "index.js",
+  "authors": [
+    "spatino"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/sjpl85/aws-launcher",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.6.3",
+    "angular-route": "^1.6.3",
+    "angular-mocks": "^1.6.3",
+    "aws-sdk": "^2.32.0",
+    "jquery": "^3.2.1",
+    "bootstrap": "^4.0.0",
+    "tether": "^1.3.0",
+    "underscore": "^1.8.3"
+  }
+}
